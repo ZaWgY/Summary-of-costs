@@ -1,0 +1,23 @@
+<form [formGroup]="groupForm" (ngSubmit)="onSubmit()" class="contact_form">
+  <li>
+    <h2>Создание проекта</h2>
+  </li>
+  <li>
+    <label>Название:</label>
+    <input type="text" placeholder="Название" formControlName="name"  />
+  </li>
+  <li>
+    <label>Описание:</label>
+    <textarea type="text" cols="40" rows="6" maxlength="255" placeholder="Описание" formControlName="description" ></textarea>
+  </li>
+  <li>
+    <label>Бюджет:</label>
+    <input type="number" placeholder="Бюджет" formControlName="maxAmount" />
+  </li>
+  <br/>
+  <li>
+    <button class="submit">
+      Создать
+    </button>
+  </li>
+</form>

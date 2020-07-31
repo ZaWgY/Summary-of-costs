@@ -1,0 +1,158 @@
+<div style="position: page" >
+  <mat-card style="max-width: fit-content">
+    <div class="container">
+      <div class="box">
+        <div class="img">
+          <img *ngIf="photoLink !== 'http://ec2-18-220-165-203.us-east-2.compute.amazonaws.com/images/'" [src]="photoLink" alt="no img">
+          <img *ngIf="photoLink === 'http://ec2-18-220-165-203.us-east-2.compute.amazonaws.com/images/'" src="https://www.stihi.ru/pics/2012/05/03/7633.jpg">
+        </div>
+        <div class="personal_text" style="position: relative; top: 0; width: 350px">
+          <h3 style="word-wrap: break-word; width: 330px; position: relative; top: -50px">{{name}}   <mat-icon *ngIf="this.role === 'OWNER'" routerLink="/groups/{{this.groupId}}/edit" style="position: relative; top: -5px; cursor: pointer;">create</mat-icon></h3>
+          <div style="width: 340px; word-wrap: break-word; position: relative;">{{description}}</div>
+        </div>
+        <div style="position: relative; top: -65px; padding-right: 10px">
+        <div *ngIf="progress > 100">
+          <mat-progress-bar mode="determinate" style="width: 300px" color="warn" [value]="progress"></mat-progress-bar>
+          <br/>
+          <div style="color: red; font-size: 36px; font-family: 'Impact'">{{curAmount}}₽</div>
+        </div>
+        <div *ngIf="progress === 100">
+          <mat-progress-bar mode="determinate" style="width: 300px" color="accent" [value]="progress"></mat-progress-bar>
+          <br/>
+          <div style="color: yellow; font-size: 36px; font-family: 'Impact'">{{curAmount}}₽</div>
+        </div>
+        <div *ngIf="progress < 100">
+          <mat-progress-bar mode="determinate" style="width: 300px" color="primary" [value]="progress"></mat-progress-bar>
+          <br/>
+          <div style="color: blue; font-size: 36px; font-family: 'Impact'; ">{{curAmount}}₽</div>
+        </div>
+          <br/>
+          <div style="color: grey; font-size: 12px; font-family: 'Comic Sans MS'">
+            потрачено из выделенных {{maxAmount}}₽
+          </div>
+          <br/>
+          <br/>
+          <button mat-raised-button (click)="popUpCreate()">
+            <mat-icon>add</mat-icon>Добавить затрату
+          </button>
+        </div>
+        <div style="position: static; left: 30px; padding-bottom: 10px">
+          Участники группы:
+          <mat-card style="padding-bottom: 10px; padding-top: 0">
+          <span *ngFor="let u of listOfUsers; let i = index;">
+              <img class="imglol" *ngIf="u.imgName !== null" [src]="this.nginxUrl + u.imgName" alt="no img">
+              <img class="imglol" *ngIf="u.imgName === null" src="https://www.stihi.ru/pics/2012/05/03/7633.jpg">
+              {{u.firstName}}
+              {{u.secondName}}
+              <mat-icon *ngIf="u.id != this.loginService.currentUser().token.id && this.role == 'OWNER'" (click)="deleteMember(this.groupId, u)" style="position: relative; top: 5px; cursor: pointer;">highlight_off</mat-icon>
+            <br/>
+           </span>
+          </mat-card>
+          <br/>
+          <form class="example-form" *ngIf="role === 'OWNER' || role === 'ADMIN'">
+            <mat-form-field class="example-full-width">
+              <div class="container">
+                <div class="box" >
+                  <div>
+              <input type="text" placeholder="Поиск" aria-label="Поиск" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                  </div>
+                <div>
+              <mat-icon (click)="inviteUser()" style="position: relative; top: 5px; left: 100px;cursor: pointer;">add</mat-icon>
+                </div>
+                </div>
+              </div>
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  <mat-card>
+                    <img class="imglol" *ngIf="option.imgName !== null" [src]="this.nginxUrl + option.imgName" alt="no img">
+                    <img class="imglol" *ngIf="option.imgName === null" src="https://www.stihi.ru/pics/2012/05/03/7633.jpg">
+                    {{option.firstName}}
+                    {{option.secondName}}
+                    <mat-divider></mat-divider>
+                  </mat-card>
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
+          <div class="font_error" *ngIf="this.invitationInfo !== ''">{{this.invitationInfo}}</div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  <mat-tab-group animationDuration="1200ms">
+    <mat-tab label="Личные затраты">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Поиск" type="text" [(ngModel)]="searchName"/> <br/>
+      </mat-form-field>
+      <div  *ngFor="let s of spendings | searchc: searchName">
+
+        <mat-card>
+          Сумма: {{s.amount}}₽,
+          Категория: {{s.categoryName}},
+          Дата: {{s.date}}
+          <mat-icon  (click)="deleteSpending(s.id)" style="position: relative; top: 5px; cursor: pointer;">highlight_off</mat-icon>
+        </mat-card>
+
+      </div>
+    </mat-tab>
+    <mat-tab label="Общие затраты">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Поиск" type="text" [(ngModel)]="searchName"/> <br/>
+      </mat-form-field>
+      <div  *ngFor="let s of groupSpendings | searchc: searchName">
+
+        <mat-card>
+          Сумма: {{s.amount}},
+          Категория: {{s.categoryName}}
+          Пользователь: {{s.login}}
+          Дата: {{s.date}}
+          <mat-icon *ngIf="this.role === 'OWNER'" (click)="deleteSpending(s.id)" style="position: relative; top: 5px; cursor: pointer;">highlight_off</mat-icon>
+        </mat-card>
+
+      </div>
+    </mat-tab>
+    <mat-tab label="Личные графики">
+      <h1 *ngIf="pieChartPersData.length !== 0" style="position: relative; left: 35%;">Затраты по категориям:</h1>
+      <h1 *ngIf="pieChartPersData.length === 0" style="position: relative; left: 15%;">Добавьте хотя бы одну затрату для отображения графиков</h1>
+      <div class="chart" style="width: 600px; height: 600px; position: relative; left: 25%;">
+        <canvas baseChart
+                [data]="pieChartPersData"
+                [labels]="pieChartPersLabels"
+                [chartType]="pieChartType"
+                [options]="pieChartOptions"
+                [colors]="pieChartColors"
+                [legend]="pieChartLegend">
+        </canvas>
+      </div>
+
+    </mat-tab>
+    <mat-tab label="Общие графики">
+      <div>
+        <h1 style="position: relative; left: 35%;">Затраты по категориям:</h1>
+        <div class="chart" style="width: 600px; height: 600px; position: relative; left: 25%;">
+          <canvas baseChart
+                  [data]="pieChartData"
+                  [labels]="pieChartLabels"
+                  [chartType]="pieChartType"
+                  [options]="pieChartOptions"
+                  [colors]="pieChartColors"
+                  [legend]="pieChartLegend">
+          </canvas>
+        </div>
+        <h1 style="position: relative; left: 33%; top: -200px">Затраты по пользователям:</h1>
+        <div class="chart" style="width: 600px; height: 600px; position: relative; left: 25%; top: -200px">
+          <canvas baseChart
+                  [data]="pieChartUsersData"
+                  [labels]="pieChartUsersLabels"
+                  [chartType]="pieChartType"
+                  [options]="pieChartOptions"
+                  [colors]="pieChartColors"
+                  [legend]="pieChartLegend">
+          </canvas>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+<div>
+</div>
+</div>

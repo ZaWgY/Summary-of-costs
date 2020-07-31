@@ -1,0 +1,33 @@
+
+<div class="login-page">
+  <div class="form">
+    <form class="login-form" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <input type="text" placeholder="First Name" formControlName="firstName"/>
+      <div *ngIf="f.firstName.errors && this.submitted">
+        <div *ngIf="f.firstName.errors.required" class="message">First Name is required</div>
+      </div>
+      <input type="text" placeholder="Second Name" formControlName="secondName"/>
+      <div *ngIf="f.secondName.errors && this.submitted">
+        <div *ngIf="f.secondName.errors.required" class="message">Second Name is required</div>
+      </div>
+      <input type="text" placeholder="Login" formControlName="login"/>
+      <div *ngIf="f.login.errors && this.submitted">
+        <div *ngIf="f.login.errors.required" class="message">Username is required</div>
+      </div>
+      <input type="password" placeholder="Password" formControlName="password"/>
+      <div *ngIf="f.password.errors && this.submitted">
+        <div *ngIf="f.password.errors.required" class="message">Password is required</div>
+        <div *ngIf="f.password.errors.minlength" class="message">Password must be at least 6 characters</div>
+      </div>
+      <input type="text" placeholder="Email" formControlName="email"/>
+      <div *ngIf="f.email.errors && this.submitted">
+        <div *ngIf="f.email.errors || this.signUpForm.controls.email.value === '' || this.signUpForm.controls.email.value === null" class="message">Email is invalid</div>
+      </div>
+      <a *ngIf="this.error !== ''" class="message">{{this.error}}</a>
+      <br/>
+      <br/>
+      <button>create</button>
+      <p class="message">Already registered? <a href="/login">Sign In</a></p>
+    </form>
+  </div>
+</div>

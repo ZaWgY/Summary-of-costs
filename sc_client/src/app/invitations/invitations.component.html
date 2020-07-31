@@ -1,0 +1,20 @@
+<div class="contact_form">
+  <li>
+    <h2>
+      Приглашения
+    </h2>
+  </li>
+<li class="kekw" *ngIf="this.invitations === undefined || this.invitations.length === 0">Приглашений нету</li>
+  <li *ngFor="let i of invitations; let i = index;">
+    <mat-card>
+      <div class="header">{{i.groupListDto.name}}</div>
+      <div class="kekp">{{i.groupListDto.description}}</div>
+      <div>
+      <button class="submit" (click)="accept(i)">Принять</button>
+      <button class="submit" style="margin-left: 10px;" (click)="decline(i)">Отклонить</button>
+      </div>
+<!--      <mat-icon svgIcon="thumbs-up" aria-hidden="false" aria-label="" (click)="accept(i)"></mat-icon>-->
+<!--      <mat-icon svgIcon="decline" aria-hidden="false" aria-label="" (click)="decline(i)"></mat-icon><br>-->
+    </mat-card>
+  </li>
+</div>

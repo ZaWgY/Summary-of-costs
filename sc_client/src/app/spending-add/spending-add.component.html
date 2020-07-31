@@ -1,0 +1,16 @@
+
+<mat-form-field>
+  <input type="number" style="width: 400px" matInput placeholder="Сумма" [(ngModel)]="amount">
+</mat-form-field>
+    <mat-form-field>
+              <mat-select  placeholder="Категория" [(ngModel)]="categoryId">
+      <span *ngFor="let c of categoryArr; let i = index;">
+      <mat-option value="{{c.categoryId}}">{{c.name}}</mat-option>
+      </span>
+              </mat-select>
+
+    </mat-form-field>
+
+<button style="left: 125px" mat-button (click)="addSpending()">Добавить затрату</button>
+
+

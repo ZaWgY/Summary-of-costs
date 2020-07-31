@@ -1,0 +1,17 @@
+<td *ngIf="this.loginService.currentUser() != null">
+  <div class="widget" style="margin-top: 15px">
+    <h3 class="widget-title">Summary of costs</h3>
+    <ul class="widget-list">
+      <li><a routerLink="/main">Главная</a></li>
+      <li><a routerLink="/groups">Проекты</a></li>
+      <li><a routerLink="/invitations" matBadge={{this.length}} matBadgeOverlap = "false" matBadgePosition="above after">Приглашения</a></li>
+      <li><a routerLink="/settings">Настройки</a></li>
+      <li><a (click)="this.loginService.logOut()" href="/login">Выход</a></li>
+    </ul>
+  </div>
+</td>
+<td class="test">
+<router-outlet class="test"></router-outlet>
+<router-outlet name='content'></router-outlet>
+</td>
+

@@ -1,0 +1,39 @@
+<div class="contact_form">
+  <li>
+    <h2>
+      Проекты
+      <button mat-raised-button (click)="goToCreateGroupPage()">
+        <mat-icon>add</mat-icon>Создать проект
+      </button>
+    </h2>
+  </li>
+  <br/>
+  <mat-form-field class="example-full-width">
+  <input matInput placeholder="Название" type="text" [(ngModel)]="searchName"/><br/>
+  </mat-form-field>
+  <li *ngFor="let g of groups | search: searchName">
+    <mat-card>
+      <div class="container">
+      <div class="box">
+      <div>
+<!--        {{g.imgName}}-->
+        <img *ngIf="g.imgName !== null" [src]="this.nginxUrl + g.imgName" alt="no img" (click)="goToGroupPage(g.groupId)">
+        <img *ngIf="g.imgName === null" src="https://www.stihi.ru/pics/2012/05/03/7633.jpg" (click)="goToGroupPage(g.groupId)">
+      </div>
+      <div style="margin-left: 20px; position: relative; top: -25px">
+    <div class="header" (click)="goToGroupPage(g.groupId)">
+      {{g.name}}
+    </div>
+        <br/>
+    <div class="kekp">
+      {{g.description}}
+    </div>
+      </div>
+      </div>
+      </div>
+    </mat-card>
+  </li>
+
+</div>
+
+

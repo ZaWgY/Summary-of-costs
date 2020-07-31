@@ -1,0 +1,43 @@
+<form [formGroup]="editForm" class="contact_form" (ngSubmit)="onSubmit()">
+  <li>
+    <h2>Редактирование профиля</h2>
+  </li>
+  <li>
+    <label>Имя:</label>
+    <input type="text" formControlName="firstName" placeholder="Пост" [value]="this.currentUser.firstName" />
+  </li>
+  <li>
+    <label>Фамилия:</label>
+    <input type="text" formControlName="secondName" placeholder="Малон" [value]="this.currentUser.secondName"/>
+  </li>
+  <li>
+    <label>Почта:</label>
+    <input type="text" formControlName="email" placeholder="postmalone@mail.ru" [value]="this.currentUser.email">
+    <span class="form_hint">Proper format "example@gmail.com"</span>
+  </li>
+  <br>
+  <a *ngIf="this.error !== ''" class="font_error">{{this.error}}</a>
+  <br>
+  <br>
+  <li>
+    <button class="submit">
+      Редактировать
+    </button>
+  </li>
+</form>
+<br/>
+<div class="contact_form">
+  <li>
+  <h2>Добавление фото</h2>
+  </li>
+</div>
+<div>
+  <br/>
+  <input type="file" id="file" (change)="processFile($event.target.files)">
+  <br>
+  <br>
+  <a *ngIf="this.info !== ''" class="font_error">{{this.info}}</a>
+  <br>
+  <br>
+  <button class="submit" (click)="addPhoto()" >Добавить фото</button>
+</div>

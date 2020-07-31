@@ -1,0 +1,21 @@
+
+  <div class="login-page">
+    <div class="form">
+      <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <input type="text" placeholder="username" formControlName="login"/>
+        <div *ngIf="f.login.errors && this.submitted">
+          <div *ngIf="f.login.errors.required" class="message">Login is required</div>
+        </div>
+        <input type="password" placeholder="password" formControlName="password"/>
+        <div *ngIf="f.password.errors && this.submitted">
+          <div *ngIf="f.password.errors.required" class="message">Password is required</div>
+          <div *ngIf="f.password.errors.minlength" class="message">Password must be at least 6 characters</div>
+        </div>
+        <div class="message" *ngIf="this.submitted">{{this.error}}</div>
+        <br/>
+        <button>login</button>
+        <p class="message">Not registered? <a href="/registration">Create an account</a></p>
+      </form>
+    </div>
+  </div>
+

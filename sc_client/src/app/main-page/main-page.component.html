@@ -1,0 +1,35 @@
+<mat-card style="max-width: fit-content">
+  <div class="container">
+  <div class="box">
+  <div class="img">
+<!--    <img [src]="photoLink" align="left"  alt="you can upload img in the settings">-->
+    <img *ngIf="photoLink !== 'http://ec2-18-220-165-203.us-east-2.compute.amazonaws.com/images/'" [src]="photoLink" alt="no img">
+    <img *ngIf="photoLink === 'http://ec2-18-220-165-203.us-east-2.compute.amazonaws.com/images/'" src="https://www.stihi.ru/pics/2012/05/03/7633.jpg">
+  </div>
+<div class="personal_text" style="position: relative; top: -90px" >
+      <h3>{{currentUser.firstName}} {{currentUser.secondName}}</h3>
+<!--      <h4>Кол-во собственных проектов: {{this.ownGroups.length}}</h4>-->
+      <mat-icon svgIcon="email" aria-hidden="false"></mat-icon><a style="font-size: 24px; color: grey">{{currentUser.email}}</a>
+</div>
+  </div>
+  </div>
+</mat-card>
+<div style="margin-left: -180px;">
+<ul class="article-list-basic">
+  <li *ngFor="let g of ownGroups; let i = index;">
+    <mat-card class="test">
+      <h2><a>{{g.name}}</a></h2>
+      <p style="word-wrap: break-word;">{{g.description}}</p>
+      <a routerLink="/groups/{{g.groupId}}" class="read-more">Перейти к проекту →</a>
+    </mat-card>
+  </li>
+</ul>
+</div>
+
+
+
+
+
+
+
+

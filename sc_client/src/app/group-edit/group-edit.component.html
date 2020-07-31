@@ -1,0 +1,64 @@
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="contact_form">
+  <li>
+    <h2>Редактирование проекта <mat-icon svgIcon="return" aria-hidden="false" (click)="return()"></mat-icon></h2>
+  </li>
+  <li>
+    <label>Название:</label>
+    <input type="text" placeholder="Название" formControlName="name" [value]="this.group.name" />
+  </li>
+  <li>
+    <label>Бюджет:</label>
+    <input type="number" placeholder="Бюджет" formControlName="maxAmount" [value]="this.group.maxAmount"/>
+  </li>
+  <li>
+    <label>Описание:</label>
+    <textarea type="text" cols="40" rows="6" placeholder="Описание" formControlName="description" [value]="this.group.description"></textarea>
+  </li>
+  <br>
+  <a *ngIf="this.error !== ''" class="font_error">{{this.error}}</a>
+  <br>
+  <br>
+  <li>
+    <button class="submit">
+      Редактировать
+    </button>
+  </li>
+</form>
+<br/>
+<div class="contact_form">
+  <li>
+    <h2>Добавление фото</h2>
+  </li>
+</div>
+<div>
+  <br/>
+  <input type="file" id="file" (change)="processFile($event.target.files)">
+  <br>
+  <br>
+  <a *ngIf="this.info !== ''" class="font_error">{{this.info}}</a>
+  <br>
+  <br>
+  <button class="submit" (click)="addPhoto()" >Добавить фото</button>
+</div>
+<br/>
+<div class="contact_form">
+  <li>
+    <h2>Добавление картегории</h2>
+  </li>
+</div>
+<div  class="contact_form">
+  <li>
+    <label>Категория:</label>
+      <input type="text" placeholder="Название категории"  [(ngModel)]="this.categoryName"/>
+
+  </li>
+  <br>
+  <a *ngIf="this.categoryInfo !== ''" class="font_error">{{this.categoryInfo}}</a>
+  <br>
+  <br>
+  <li>
+    <button class="submit" (click)="addCategory()">
+      Добавить
+    </button>
+  </li>
+</div>
