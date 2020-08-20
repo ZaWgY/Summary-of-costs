@@ -10,6 +10,6 @@
 `cd ../sc_client`  
 `ng serve`  
 ## Authors
-Kolishchuk Vadim
+Kolishchuk Vadim - [kolishuckvu@gmail.com]
 ## License
 @ 2019 Kolishchuk Vadim. All rights reserved
